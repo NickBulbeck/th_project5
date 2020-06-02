@@ -5,17 +5,27 @@ let rawData = null
 
 const data_getUser = (url) => {
   return fetch(url)
-    // .then(checkStatus)
+    .then(checkStatus)
     .then(response => response.json())
     .then(data => {
       rawData = data.results[0];
       console.log(rawData.gender);
-
+      users.push(rawData);
+      console.log(users[0]);
     })
 }
 data_getUser(randomUsers);
 
 // Promise.all(
+
+function checkStatus(response) {
+  if (response.ok) {
+    return Promise.resolve(response);
+  } else {
+    return Promise.reject(new Error(response.statusText));
+  }
+}
+
 
 
 // )

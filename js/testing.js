@@ -23,13 +23,6 @@ const testFetch = (url) => {
       .catch(error => console.log('Evil befell: ', error));
 }
 
-function checkStatus(response) {
-  if (response.ok) {
-    return Promise.resolve(response);
-  } else {
-    return Promise.reject(new Error(response.statusText));
-  }
-}
 
 // testFetch(randomUsers);
 // console.log(testData);
