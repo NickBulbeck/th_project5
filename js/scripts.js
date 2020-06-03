@@ -31,6 +31,14 @@ const usersDisplayed = 12;
 
 // Creating the HTML:
 
+const createSearch = () => {
+
+}
+
+const createGallery = () => {
+  
+}
+
 const createModal = () => {
   console.log("creating the modal...");
 }
