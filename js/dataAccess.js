@@ -9,9 +9,7 @@ const data_getUser = (url) => {
     .then(response => response.json())
     .then(data => {
       rawData = data.results[0];
-      console.log(rawData.gender);
       users.push(rawData);
-      console.log(users[0]);
     })
 }
 data_getUser(randomUsers);

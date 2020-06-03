@@ -30,9 +30,29 @@ Files:
 const usersDisplayed = 12;
 
 // Creating the HTML:
+// <form action="#" method="get">
+//     <input type="search" id="search-input" class="search-input" placeholder="Search...">
+//     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+// </form>
 
 const createSearch = () => {
-
+  const searchDiv = document.querySelector('.search-container');
+  let form = document.createElement('form');
+  let searchInput = document.createElement('input');
+  let searchSubmit = document.createElement('input');
+  searchInput.setAttribute("type","search");
+  searchInput.setAttribute("id","search-input");
+  searchInput.setAttribute("class","search-input");
+  searchInput.setAttribute("placeholder","Search...");
+  form.appendChild(searchInput);
+  searchSubmit.setAttribute("type","submit");
+  searchSubmit.setAttribute("value","submit");
+  searchSubmit.setAttribute("id","submit");
+  searchSubmit.setAttribute("class","submit");
+  form.appendChild(searchSubmit);
+  searchDiv.appendChild(form);
+  searchInput.addEventListener('input',onSearchInput);
+  form.addEventListener('submit',filterEmployees);
 }
 
 const createGallery = () => {
@@ -42,3 +62,21 @@ const createGallery = () => {
 const createModal = () => {
   console.log("creating the modal...");
 }
+
+/* 
+    Event handlers
+*/
+
+const filterEmployees = () => {
+  console.log("In the filterEmployees function");
+}
+
+const onSearchInput = (event) => {
+  console.log(event.target.value);
+}
+
+/*
+    The app itself...
+*/
+createSearch();
+createGallery();
