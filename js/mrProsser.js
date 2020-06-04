@@ -4,4 +4,4 @@ const milliways = () => {
   console.log("In hitchhiker function...");
 }
 
-milliways();
+// milliways();

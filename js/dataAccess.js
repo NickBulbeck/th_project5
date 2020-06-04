@@ -1,5 +1,5 @@
-const randomUsers = 'https://randomuser.me/api/';
-const users = [];
+const randomUsers = 'https://randomuser.me/api/?results=12&exc=login&noinfo';
+let users;
 let rawData = null
 // const 
 
@@ -8,13 +8,13 @@ const data_getUser = (url) => {
     .then(checkStatus)
     .then(response => response.json())
     .then(data => {
-      rawData = data.results[0];
-      users.push(rawData);
+      console.log(data.results);
+      users = data.results;
+      console.log(users);
     })
 }
 data_getUser(randomUsers);
-
-// Promise.all(
+console.log(users);
 
 function checkStatus(response) {
   if (response.ok) {
@@ -24,8 +24,18 @@ function checkStatus(response) {
   }
 }
 
+/* the gallery / directory has:
+    - image (it seems to work in the form of a url, possibly because it's cached)
+    - first name
+    - last name
+    - email
+    - city or location
+  to which the modal adds at least:
+    - cell number
+    - full/detailed address (basically, everything that's there)
+    - birthday
 
-
+*/
 // )
 // .then(data => {
 //   const breedList = data[0].message;

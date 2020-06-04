@@ -1,0 +1,1 @@
+Need the gallery of 12 items. I could create a mockup one first.

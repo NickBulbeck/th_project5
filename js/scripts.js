@@ -28,15 +28,11 @@ Files:
 
 // Elements:
 const usersDisplayed = 12;
+const galleryDiv = document.getElementById('gallery');
+const searchDiv = document.querySelector('.search-container');
 
-// Creating the HTML:
-// <form action="#" method="get">
-//     <input type="search" id="search-input" class="search-input" placeholder="Search...">
-//     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-// </form>
 
 const createSearch = () => {
-  const searchDiv = document.querySelector('.search-container');
   let form = document.createElement('form');
   let searchInput = document.createElement('input');
   let searchSubmit = document.createElement('input');
@@ -55,11 +51,44 @@ const createSearch = () => {
   form.addEventListener('submit',filterEmployees);
 }
 
+const prepGallery = () => {
+  const loading = document.createElement('h2');
+  loading.textContent = "Loading employee details...";
+  galleryDiv.innerHTML = '';
+  galleryDiv.appendChild(loading);
+}
+
+const loadEmployees= () => {
+  // set prepGallery
+  // call the dataAccess function
+  // when it's finished, either populate the gallery or 
+}
+
 const createGallery = () => {
-  
+// This creates twelve placeholders. Question: what do we do when the page loads?
+// Add all these placeholders and then overwrite them, or leave them blank until the
+// request comes back? What if the request doesn't come back?
+// We have to create a unique id for each h3 element.
+// So: this firstly sets up a placeholder value
+  let html = `
+  <div class="card">
+      <div class="card-img-container">
+          <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+      </div>
+      <div class="card-info-container">
+          <h3 id="name" class="card-name cap">first last</h3>
+          <p class="card-text">email</p>
+          <p class="card-text cap">city, state</p>
+      </div>
+  </div>
+  `
+  for (let i=1; i<=usersDisplayed; i++) {
+    galleryDiv.innerHTML += html;
+  }
 }
 
 const createModal = () => {
+// If there's nae response fae random api, there's nae modal either.
   console.log("creating the modal...");
 }
 
@@ -79,4 +108,9 @@ const onSearchInput = (event) => {
     The app itself...
 */
 createSearch();
-createGallery();
+prepGallery();
+loadEmployees()
+// createGallery();
+
+
+
