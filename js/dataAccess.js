@@ -1,20 +1,19 @@
 const randomUsers = 'https://randomuser.me/api/?results=12&exc=login&noinfo';
 let users;
-let rawData = null
 // const 
 
 const data_getUser = (url) => {
-  return fetch(url)
-    .then(checkStatus)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data.results);
-      users = data.results;
-      console.log(users);
-    })
+  // return fetch(url)
+  //   .then(checkStatus)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data.results);
+  //     users = data.results;
+  //     console.log(users);
+  //   })
+  console.log(url);
 }
-data_getUser(randomUsers);
-console.log(users);
+// data_getUser(randomUsers);
 
 function checkStatus(response) {
   if (response.ok) {

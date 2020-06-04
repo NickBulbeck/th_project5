@@ -58,38 +58,59 @@ const prepGallery = () => {
   galleryDiv.appendChild(loading);
 }
 
+const finishGallery = () => {
+  const loading = galleryDiv.getElementsByTagName('h2')[0];
+  if (loading) {
+    loading.parentNode.removeChild(loading);
+  }
+}
+
 const loadEmployees= () => {
+  const url = 'https://randomuser.me/api/?results=12&exc=login&noinfo';
+  fetch(url)
+    // .then(checkStatus)
+    .then(response => response.json())
+    .then(data => {
+      let employees = data.results;
+      employees.forEach(employee => createGalleryEntry(employee));
+      finishGallery();
+    })
+
   // set prepGallery
   // call the dataAccess function
   // when it's finished, either populate the gallery or 
 }
 
-const createGallery = () => {
-// This creates twelve placeholders. Question: what do we do when the page loads?
-// Add all these placeholders and then overwrite them, or leave them blank until the
-// request comes back? What if the request doesn't come back?
-// We have to create a unique id for each h3 element.
-// So: this firstly sets up a placeholder value
+const createGalleryEntry = (employee) => {
+  console.log(employee);
+  const name = `${employee.name.first} ${employee.name.last}`;
+  const nameH3 = `${employee.name.first}-${employee.name.last}`;
+  const image = employee.picture.large;
+  const alt = `profile picture for ${name}`;
+  const email = employee.email;
+  const location = `${employee.location.city}, ${employee.location.country}`
+  const employeeDiv = document.createElement('div');
+  employeeDiv.setAttribute("class","card");
   let html = `
-  <div class="card">
       <div class="card-img-container">
-          <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+          <img class="card-img" src="${image}" alt="${alt}">
       </div>
       <div class="card-info-container">
-          <h3 id="name" class="card-name cap">first last</h3>
-          <p class="card-text">email</p>
-          <p class="card-text cap">city, state</p>
+          <h3 id="${nameH3}" class="card-name cap">${name}</h3>
+          <p class="card-text">${email}</p>
+          <p class="card-text cap">${location}</p>
       </div>
-  </div>
   `
-  for (let i=1; i<=usersDisplayed; i++) {
-    galleryDiv.innerHTML += html;
-  }
+  employeeDiv.innerHTML = html;
+  galleryDiv.appendChild(employeeDiv);
+  employeeDiv.addEventListener('click',function(event) {
+    createModal(employee);
+  })
 }
 
-const createModal = () => {
+const createModal = (employee) => {
 // If there's nae response fae random api, there's nae modal either.
-  console.log("creating the modal...");
+  console.log("creating the modal... " + employee.email);
 }
 
 /* 
