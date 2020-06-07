@@ -30,6 +30,7 @@ Files:
 const usersDisplayed = 12;
 const galleryDiv = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
+const loadedUsers = [];
 
 
 const createSearch = () => {
@@ -66,23 +67,23 @@ const finishGallery = () => {
 }
 
 const loadEmployees= () => {
-  const url = 'https://randomuser.me/api/?results=12&exc=login&noinfo';
+  const url = `https://randomuser.me/api/?results=${usersDisplayed}&exc=login&noinfo`;
   fetch(url)
-    // .then(checkStatus)
+    // .then(checkStatus) - do this later
     .then(response => response.json())
     .then(data => {
       let employees = data.results;
-      employees.forEach(employee => createGalleryEntry(employee));
+      employees.forEach(employee => {
+        createGalleryEntry(employee);
+      });
       finishGallery();
     })
-
-  // set prepGallery
-  // call the dataAccess function
-  // when it's finished, either populate the gallery or 
 }
 
 const createGalleryEntry = (employee) => {
-  console.log(employee);
+  loadedUsers.push(employee);
+  const employeeIndex = loadedUsers.length - 1;
+  const id = employeeIndex.toString();
   const name = `${employee.name.first} ${employee.name.last}`;
   const nameH3 = `${employee.name.first}-${employee.name.last}`;
   const image = employee.picture.large;
@@ -91,6 +92,7 @@ const createGalleryEntry = (employee) => {
   const location = `${employee.location.city}, ${employee.location.country}`
   const employeeDiv = document.createElement('div');
   employeeDiv.setAttribute("class","card");
+  employeeDiv.setAttribute("data-index",id);
   let html = `
       <div class="card-img-container">
           <img class="card-img" src="${image}" alt="${alt}">
@@ -104,13 +106,49 @@ const createGalleryEntry = (employee) => {
   employeeDiv.innerHTML = html;
   galleryDiv.appendChild(employeeDiv);
   employeeDiv.addEventListener('click',function(event) {
-    createModal(employee);
+    createModal(employeeIndex);
   })
 }
 
-const createModal = (employee) => {
-// If there's nae response fae random api, there's nae modal either.
-  console.log("creating the modal... " + employee.email);
+const createModal = (index) => {
+  const employee = loadedUsers[index];
+  console.log(employee);
+  const modalContainer = document.createElement('div');
+  modalContainer.setAttribute('class','modal-container');
+  const modal = document.createElement('div');
+  modal.setAttribute('class','modal');
+  const modalButtons = document.createElement('div');
+  
+
+// If there's nae response fae random api, there's nae modal either. 
+// Handle that later...
+
+// <div class="modal-container">
+//     <div class="modal">
+//         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+//         <div class="modal-info-container">
+//             <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+//             <h3 id="name" class="modal-name cap">name</h3>
+//             <p class="modal-text">email</p>
+//             <p class="modal-text cap">city</p>
+//             <hr>
+//             <p class="modal-text">(555) 555-5555</p>
+//             <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+//             <p class="modal-text">Birthday: 10/21/2015</p>
+//         </div>
+//     </div>
+
+//     // IMPORTANT: Below is only for exceeds tasks 
+//     <div class="modal-btn-container">
+//         <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+//         <button type="button" id="modal-next" class="modal-next btn">Next</button>
+//     </div>
+// </div>
+
+// In the exceeds stuff: there's a data-index with a number fae 0 to 11. There's one
+// on each of the arrow numbers. Its event handler takes this as a parameter.
+// 
+  body.appendChild(modalContainer);
 }
 
 /* 
