@@ -17,10 +17,6 @@
   - Do this as a learning exercise: that is, do it via xmlHTTPrequest, AJAX, Promise, and/or fetch()
 
 
-Files: 
-  - app.js, with the main app in it.
-  - dataAccess.js, with the data array in it and the functions that set up the users from the api
-  - app.js that has everything else.
 */
 
 // 
@@ -112,17 +108,23 @@ const createGalleryEntry = (employee) => {
 
 const createModal = (index) => {
   const employee = loadedUsers[index];
-  console.log(employee);
   const modalContainer = document.createElement('div');
   modalContainer.setAttribute('class','modal-container');
   const modal = document.createElement('div');
   modal.setAttribute('class','modal');
-  const modalButtons = document.createElement('div');
-  
-
-// If there's nae response fae random api, there's nae modal either. 
-// Handle that later...
-
+  const modalButtonContainer = document.createElement('div');
+  modalButtonContainer.setAttribute('class','modal-btn-container');
+  const closeButton = document.createElement('button');
+  closeButton.setAttribute('class','modal-close-btn');
+  closeButton.setAttribute('id','modal-close-btn');
+  closeButton.setAttribute('type','button');
+  closeButton.innerHTML = `<strong>X</strong>`;
+  const backButton = document.createElement('button');
+  const forwardButton = document.createElement('button');
+  closeButton.addEventListener('click',function() {
+    modalContainer.parentNode.removeChild(modalContainer);
+  })
+  modal.appendChild(closeButton);
 // <div class="modal-container">
 //     <div class="modal">
 //         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -148,7 +150,9 @@ const createModal = (index) => {
 // In the exceeds stuff: there's a data-index with a number fae 0 to 11. There's one
 // on each of the arrow numbers. Its event handler takes this as a parameter.
 // 
-  body.appendChild(modalContainer);
+  modalContainer.appendChild(modal);
+  modalContainer.appendChild(modalButtons);
+  document.body.appendChild(modalContainer);
 }
 
 /* 
