@@ -107,24 +107,42 @@ const createGalleryEntry = (employee) => {
 }
 
 const createModal = (index) => {
+  if (document.querySelector('.modal-container')) {
+    const deid = document.querySelector('.modal-container');
+    deid.parentNode.removeChild(deid);
+  }
+
   const employee = loadedUsers[index];
+  console.log(employee);
+
   const modalContainer = document.createElement('div');
   modalContainer.setAttribute('class','modal-container');
   const modal = document.createElement('div');
   modal.setAttribute('class','modal');
-  const modalButtonContainer = document.createElement('div');
-  modalButtonContainer.setAttribute('class','modal-btn-container');
+
   const closeButton = document.createElement('button');
   closeButton.setAttribute('class','modal-close-btn');
   closeButton.setAttribute('id','modal-close-btn');
   closeButton.setAttribute('type','button');
   closeButton.innerHTML = `<strong>X</strong>`;
-  const backButton = document.createElement('button');
-  const forwardButton = document.createElement('button');
   closeButton.addEventListener('click',function() {
     modalContainer.parentNode.removeChild(modalContainer);
   })
   modal.appendChild(closeButton);
+
+  const modalInfoContainer = document.createElement('div');
+  modalInfoContainer.setAttribute('class','modal-info-container');
+  const name = `${employee.name.first} ${employee.name.last}`;
+  const html = `
+    <img class="modal-img" src="${employee.picture.large}" alt="profile picture for ${name}">
+    <h3 id="modal-${name}" class="modal-name cap">${name}</h3>
+    <p class="modal-text">${employee.email}</p>
+    <p class="modal-text">${employee.location.city}, ${employee.location.country}</p>
+    <hr>
+    <p class="modal-text">${employee.cell}</p>
+    <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}</p>
+    <p class="modal-text">Birthday: ${employee.dob.date}</p>
+  `
 // <div class="modal-container">
 //     <div class="modal">
 //         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -146,12 +164,41 @@ const createModal = (index) => {
 //         <button type="button" id="modal-next" class="modal-next btn">Next</button>
 //     </div>
 // </div>
+  modalInfoContainer.innerHTML = html;
+  modal.appendChild(modalInfoContainer);
 
-// In the exceeds stuff: there's a data-index with a number fae 0 to 11. There's one
-// on each of the arrow numbers. Its event handler takes this as a parameter.
-// 
+
+
+  const modalButtonContainer = document.createElement('div');
+  modalButtonContainer.setAttribute('class','modal-btn-container');
+  if (index > 0) {
+    const backButton = document.createElement('button');
+    backButton.setAttribute('type','button');
+    backButton.setAttribute('id','modal-prev');
+    backButton.setAttribute('class','modal-prev btn');
+    backButton.textContent = 'Prev';
+    backButton.addEventListener('click',function() {
+      const prevIndex = index - 1;
+      createModal(prevIndex);
+    })
+    modalButtonContainer.appendChild(backButton);
+  }
+  if (index < (usersDisplayed - 1)) {
+    const forwardButton = document.createElement('button');
+    forwardButton.setAttribute('type','button');
+    forwardButton.setAttribute('id','modal-next');
+    forwardButton.setAttribute('class','modal-next btn');
+    forwardButton.textContent = 'Next';
+    forwardButton.addEventListener('click',function() {
+      const nextIndex = index + 1;
+      createModal(nextIndex);
+    })
+    modalButtonContainer.appendChild(forwardButton);
+  }
+
+
   modalContainer.appendChild(modal);
-  modalContainer.appendChild(modalButtons);
+  modalContainer.appendChild(modalButtonContainer);
   document.body.appendChild(modalContainer);
 }
 
