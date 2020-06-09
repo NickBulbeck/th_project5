@@ -167,8 +167,6 @@ const createModal = (index) => {
   modalInfoContainer.innerHTML = html;
   modal.appendChild(modalInfoContainer);
 
-
-
   const modalButtonContainer = document.createElement('div');
   modalButtonContainer.setAttribute('class','modal-btn-container');
   if (index > 0) {
@@ -195,7 +193,6 @@ const createModal = (index) => {
     })
     modalButtonContainer.appendChild(forwardButton);
   }
-
 
   modalContainer.appendChild(modal);
   modalContainer.appendChild(modalButtonContainer);
