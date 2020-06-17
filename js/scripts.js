@@ -24,6 +24,8 @@
 
 // Elements:
 const usersDisplayed = 12;
+const randomUserPhotos = 95; // Correct at the time of writing!
+const randomLegoPhotos = 9;  // Ditto!
 const galleryDiv = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
 const loadedUsers = [];
@@ -62,6 +64,52 @@ const finishGallery = () => {
   }
 }
 
+const getImageURL = (gender,employeeNumber) => {
+  let factor = Math.ceil(randomUserPhotos / usersDisplayed); 
+  let photoNumber = employeeNumber * factor;
+  let photoGender = '';
+  if (gender === 'male') {
+    photoGender = 'men';
+  } else {
+    photoGender = 'women';
+  }
+  if (photoNumber % 3 === 0) {
+    photoGender = 'lego'; // I am soooooooo funny...
+    photoNumber = Math.floor(Math.random() * randomLegoPhotos); 
+  }
+  let url = `https://randomuser.me/api/portraits/${photoGender}/${photoNumber}.jpg`;
+  return url;
+}
+
+const formatEmployeeBirthday = (rawDate) => {
+  const months = [
+    "January",
+    "Feburary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ]
+  // turn yyyy-mm-ddblahblahblah into something better
+  let yyyy = rawDate.substring(0,4);
+  let mm = parseInt(rawDate.substring(5,7)) - 1;
+  let dd = rawDate.substring(8,10);
+  let mmm = months[mm];
+  let date = `${dd} ${mmm} ${yyyy}`;
+  return date;
+}
+
+const formatEmployeeAddress = (rawAddress) => {
+  let address = '';
+  return address;
+}
+
 const loadEmployees= () => {
   const url = `https://randomuser.me/api/?results=${usersDisplayed}&exc=login&noinfo`;
   fetch(url)
@@ -82,7 +130,9 @@ const createGalleryEntry = (employee) => {
   const id = employeeIndex.toString();
   const name = `${employee.name.first} ${employee.name.last}`;
   const nameH3 = `${employee.name.first}-${employee.name.last}`;
-  const image = employee.picture.large;
+  const imageNumber = loadedUsers.length;
+  const image = getImageURL(employee.gender,imageNumber);
+  employee.picture.large = image;
   const alt = `profile picture for ${name}`;
   const email = employee.email;
   const location = `${employee.location.city}, ${employee.location.country}`
@@ -95,7 +145,7 @@ const createGalleryEntry = (employee) => {
       </div>
       <div class="card-info-container">
           <h3 id="${nameH3}" class="card-name cap">${name}</h3>
-          <p class="card-text">${email}</p>
+          <p class="card-text email">${email}</p>
           <p class="card-text cap">${location}</p>
       </div>
   `
@@ -133,6 +183,7 @@ const createModal = (index) => {
   const modalInfoContainer = document.createElement('div');
   modalInfoContainer.setAttribute('class','modal-info-container');
   const name = `${employee.name.first} ${employee.name.last}`;
+  const birthday = formatEmployeeBirthday(employee.dob.date);
   const html = `
     <img class="modal-img" src="${employee.picture.large}" alt="profile picture for ${name}">
     <h3 id="modal-${name}" class="modal-name cap">${name}</h3>
@@ -141,29 +192,8 @@ const createModal = (index) => {
     <hr>
     <p class="modal-text">${employee.cell}</p>
     <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}</p>
-    <p class="modal-text">Birthday: ${employee.dob.date}</p>
+    <p class="modal-text">Birthday: ${birthday}</p>
   `
-// <div class="modal-container">
-//     <div class="modal">
-//         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-//         <div class="modal-info-container">
-//             <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-//             <h3 id="name" class="modal-name cap">name</h3>
-//             <p class="modal-text">email</p>
-//             <p class="modal-text cap">city</p>
-//             <hr>
-//             <p class="modal-text">(555) 555-5555</p>
-//             <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-//             <p class="modal-text">Birthday: 10/21/2015</p>
-//         </div>
-//     </div>
-
-//     // IMPORTANT: Below is only for exceeds tasks 
-//     <div class="modal-btn-container">
-//         <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-//         <button type="button" id="modal-next" class="modal-next btn">Next</button>
-//     </div>
-// </div>
   modalInfoContainer.innerHTML = html;
   modal.appendChild(modalInfoContainer);
 
@@ -204,11 +234,28 @@ const createModal = (index) => {
 */
 
 const filterEmployees = () => {
-  console.log("In the filterEmployees function");
+// 
 }
 
 const onSearchInput = (event) => {
-  console.log(event.target.value);
+  let inputSoFar = event.target.value;
+  let allEmails = Array.from(document.querySelectorAll('.email'));
+  if (inputSoFar === '') {
+    console.log("blank again");
+    allEmails.forEach( email => {
+      const card = email.parentNode.parentNode;
+      card.classList.remove('card-search-item');
+    });
+    return;
+  }
+  allEmails.forEach( email => {
+    const card = email.parentNode.parentNode;
+    if (email.textContent.includes(inputSoFar)) {
+      card.classList.add('card-search-item');
+    } else {
+      card.classList.remove('card-search-item');
+    }
+  })
 }
 
 /*
@@ -217,7 +264,6 @@ const onSearchInput = (event) => {
 createSearch();
 prepGallery();
 loadEmployees()
-// createGallery();
 
 
 

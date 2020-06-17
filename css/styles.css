@@ -94,6 +94,12 @@ header h1 {
     overflow: hidden;
 }
 
+.card-search-item {
+    border-width: 5px;
+    border-color: firebrick;
+    transition: .1s ease-out;
+}
+
 .card-img {
     width: 95px;
     margin: 10px 15px auto 10px;

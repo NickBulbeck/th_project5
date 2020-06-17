@@ -1,10 +1,10 @@
 Tuesday's ToDo:
 
-- Write the code to create the employee's address properly
-- Write the code to create the date of birth properly
-- Add the "number to display" drop-down
-- Write the search feature
-- Write something that ensures ye cannae get the same fotie twice
+- Write the code to create the employee's address properly          ToDo
+- Write the code to create the date of birth properly                   DONE
+- Add the "number to display" drop-down                             ToDo
+- Write the search feature                                          ToDo
+- Write something that ensures ye cannae get the same fotie twice       DONE
 
 ADDRESS...
 
