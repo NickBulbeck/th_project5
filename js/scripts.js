@@ -163,7 +163,6 @@ const createModal = (index) => {
   }
 
   const employee = loadedUsers[index];
-  console.log(employee);
 
   const modalContainer = document.createElement('div');
   modalContainer.setAttribute('class','modal-container');
@@ -233,15 +232,30 @@ const createModal = (index) => {
     Event handlers
 */
 
-const filterEmployees = () => {
-// 
+const filterEmployees = (event) => {
+  const searchButton = document.getElementById('submit');
+  event.preventDefault();
+  if (searchButton.value === 'submit') {
+    searchButton.value = 'display all';
+    let excludedCards = Array.from(document.querySelectorAll('.card:not(.card-search-item)'));
+    let searchItemCards = Array.from(document.querySelectorAll('.card-search-item'));
+    excludedCards.forEach( card => card.style.display = 'none');
+    searchItemCards.forEach( card => card.style.display = '');
+  } else {
+    searchButton.value = 'submit';
+    let cards = Array.from(document.querySelectorAll('.card'));
+      cards.forEach( card => {
+        card.style.display = '';
+        card.classList.remove('card-search-item');
+        document.getElementById('search-input').value = '';
+    });
+  }
 }
 
 const onSearchInput = (event) => {
   let inputSoFar = event.target.value;
   let allEmails = Array.from(document.querySelectorAll('.email'));
   if (inputSoFar === '') {
-    console.log("blank again");
     allEmails.forEach( email => {
       const card = email.parentNode.parentNode;
       card.classList.remove('card-search-item');
@@ -249,6 +263,7 @@ const onSearchInput = (event) => {
     return;
   }
   allEmails.forEach( email => {
+    document.getElementById('submit').value = 'submit';
     const card = email.parentNode.parentNode;
     if (email.textContent.includes(inputSoFar)) {
       card.classList.add('card-search-item');
