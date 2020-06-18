@@ -182,6 +182,13 @@ const createModal = (index) => {
   modalInfoContainer.innerHTML = html;
   modal.appendChild(modalInfoContainer);
 
+// Here's where the excitement goes. Need to:
+// 1) Detect whether there's a search in progress
+// 2) If there is, cycle only through the search results and label the buttons accordingly
+// 3) If not, cycle through all the results
+// 1.5) There's a decision to make on how to couple the modal to the rest of the screen:
+//     a) Detect the search in this function, or
+//     b) Refactor this function to take an additional, array, argument
   const modalButtonContainer = document.createElement('div');
   modalButtonContainer.setAttribute('class','modal-btn-container');
   if (index > 0) {
