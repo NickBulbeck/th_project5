@@ -92,7 +92,10 @@ const formatEmployeeBirthday = (rawDate) => {
 }
 
 const formatEmployeeAddress = (rawAddress) => {
-  let address = '';
+  let address = `
+    ${rawAddress.street.number} ${rawAddress.street.name}, ${rawAddress.city},
+     ${rawAddress.state}, ${rawAddress.postcode}
+  `;
   return address;
 }
 
@@ -169,6 +172,7 @@ const createModal = (index) => {
   modalInfoContainer.setAttribute('class','modal-info-container');
   const name = `${employee.name.first} ${employee.name.last}`;
   const birthday = formatEmployeeBirthday(employee.dob.date);
+  const address = formatEmployeeAddress(employee.location);
   const html = `
     <img class="modal-img" src="${employee.picture.large}" alt="profile picture for ${name}">
     <h3 id="modal-${name}" class="modal-name cap">${name}</h3>
@@ -176,9 +180,10 @@ const createModal = (index) => {
     <p class="modal-text">${employee.location.city}, ${employee.location.country}</p>
     <hr>
     <p class="modal-text">${employee.cell}</p>
-    <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}</p>
+    <p class="modal-text">${address}</p>
     <p class="modal-text">Birthday: ${birthday}</p>
-  `
+  `;
+  console.log(employee);
   modalInfoContainer.innerHTML = html;
   modal.appendChild(modalInfoContainer);
 
