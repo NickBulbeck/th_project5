@@ -264,7 +264,8 @@ const onSearchInput = (event) => {
   allEmails.forEach( email => {
     document.getElementById('submit').value = 'submit';
     const card = email.parentNode.parentNode;
-    if (email.textContent.includes(inputSoFar)) {
+    const alphaName = email.textContent.split("@")[0];
+    if (alphaName.includes(inputSoFar)) {
       card.classList.add('card-search-item');
     } else {
       card.classList.remove('card-search-item');
