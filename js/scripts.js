@@ -15,7 +15,8 @@ const randomUserPhotos = 95; // Correct at the time of writing!
 const randomLegoPhotos = 9;  // Ditto!
 const galleryDiv = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
-const loadedUsers = [];
+const loadedEmployees = [];
+let searchedEmployees = null;
 
 
 const createSearch = () => {
@@ -114,12 +115,12 @@ const loadEmployees= () => {
 }
 
 const createGalleryEntry = (employee) => {
-  loadedUsers.push(employee);
-  const employeeIndex = loadedUsers.length - 1;
+  loadedEmployees.push(employee);
+  const employeeIndex = loadedEmployees.length - 1;
   const id = employeeIndex.toString();
   const name = `${employee.name.first} ${employee.name.last}`;
   const nameH3 = `${employee.name.first}-${employee.name.last}`;
-  const imageNumber = loadedUsers.length;
+  const imageNumber = loadedEmployees.length;
   const image = getImageURL(employee.gender,imageNumber);
   employee.picture.large = image;
   const alt = `profile picture for ${name}`;
@@ -141,17 +142,26 @@ const createGalleryEntry = (employee) => {
   employeeDiv.innerHTML = html;
   galleryDiv.appendChild(employeeDiv);
   employeeDiv.addEventListener('click',function(event) {
-    createModal(employeeIndex);
+    let modalArray;
+    if (searchedEmployees) {
+      modalArray = searchedEmployees;
+    } else {
+      modalArray = loadedEmployees;
+    }
+    console.log(modalArray);
+    let employeeIndex = Array.from(modalArray).indexOf(employee);
+    console.log(employee + ", index: " + employeeIndex);
+    createModal(modalArray,employeeIndex);
   })
 }
 
-const createModal = (index) => {
+const createModal = (array,index) => {
   if (document.querySelector('.modal-container')) {
-    const deid = document.querySelector('.modal-container');
-    deid.parentNode.removeChild(deid);
+    const existingModal = document.querySelector('.modal-container');
+    existingModal.parentNode.removeChild(existingModal);
   }
 
-  const employee = loadedUsers[index];
+  const employee = array[index];
 
   const modalContainer = document.createElement('div');
   modalContainer.setAttribute('class','modal-container');
@@ -183,7 +193,6 @@ const createModal = (index) => {
     <p class="modal-text">${address}</p>
     <p class="modal-text">Birthday: ${birthday}</p>
   `;
-  console.log(employee);
   modalInfoContainer.innerHTML = html;
   modal.appendChild(modalInfoContainer);
 
@@ -204,11 +213,11 @@ const createModal = (index) => {
     backButton.textContent = 'Prev';
     backButton.addEventListener('click',function() {
       const prevIndex = index - 1;
-      createModal(prevIndex);
+      createModal(array,prevIndex);
     })
     modalButtonContainer.appendChild(backButton);
   }
-  if (index < (usersDisplayed - 1)) {
+  if (index < (array.length - 1)) {
     const forwardButton = document.createElement('button');
     forwardButton.setAttribute('type','button');
     forwardButton.setAttribute('id','modal-next');
@@ -216,7 +225,7 @@ const createModal = (index) => {
     forwardButton.textContent = 'Next';
     forwardButton.addEventListener('click',function() {
       const nextIndex = index + 1;
-      createModal(nextIndex);
+      createModal(array,nextIndex);
     })
     modalButtonContainer.appendChild(forwardButton);
   }
@@ -232,22 +241,31 @@ const createModal = (index) => {
 
 const filterEmployees = (event) => {
   const searchButton = document.getElementById('submit');
+  const searchInput = document.getElementById('search-input');
   event.preventDefault();
-  // Probably need to display everything first, then hide the stuff that disnae match
   if (searchButton.value === 'submit') {
     searchButton.value = 'display all';
     let excludedCards = Array.from(document.querySelectorAll('.card:not(.card-search-item)'));
     let searchItemCards = Array.from(document.querySelectorAll('.card-search-item'));
     excludedCards.forEach( card => card.style.display = 'none');
     searchItemCards.forEach( card => card.style.display = '');
+    searchInput.disabled = true;
+    searchedEmployeeElements = Array.from(document.querySelectorAll('.card-search-item'));
+    searchedEmployees = [];
+    searchedEmployeeElements.forEach( element => {
+      const index = parseInt(element.dataset.index);
+      searchedEmployees.push(loadedEmployees[index]);
+    });
   } else {
     searchButton.value = 'submit';
     let cards = Array.from(document.querySelectorAll('.card'));
       cards.forEach( card => {
         card.style.display = '';
         card.classList.remove('card-search-item');
-        document.getElementById('search-input').value = '';
+        searchInput.value = '';
+        searchInput.disabled = false;
     });
+    searchedEmployees = null;
   }
 }
 

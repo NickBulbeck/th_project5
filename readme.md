@@ -5,9 +5,11 @@ Tuesday's ToDo:
 - Add the "number to display" drop-down                             ToDo
 - Write the search feature                                              DONE
 - Write something that ensures ye cannae get the same fotie twice       DONE
-- Refactor so that the modal Prev/Next buttons recognise a Search   ToDo
+- Refactor so that the modal Prev/Next buttons recognise a Search       DONE
 - Correct the search to use only the first part of the email            DONE
-- Disable the search input while the search button is working       ToDo
+- Disable the search input while the search button is working           DONE
+- Add an appropriate response if there's naebdy in the search       ToDo
+- Fix the bug at line 254 and find the employee fae the div             DONE
 
 NUMBER TO DISPLAY...
 
