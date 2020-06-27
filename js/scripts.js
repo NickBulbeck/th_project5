@@ -10,7 +10,7 @@
 
 
 // Elements:
-const usersDisplayed = 12;
+const usersDisplayed = 64;
 const randomUserPhotos = 95; // Correct at the time of writing!
 const randomLegoPhotos = 9;  // Ditto!
 const galleryDiv = document.getElementById('gallery');
@@ -53,7 +53,7 @@ const finishGallery = () => {
 }
 
 const getImageURL = (gender,employeeNumber) => {
-  let factor = Math.ceil(randomUserPhotos / usersDisplayed); 
+  let factor = Math.floor(randomUserPhotos / usersDisplayed); 
   let photoNumber = employeeNumber * factor;
   let photoGender = '';
   if (gender === 'male') {
