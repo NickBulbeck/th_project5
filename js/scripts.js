@@ -196,13 +196,6 @@ const createModal = (array,index) => {
   modalInfoContainer.innerHTML = html;
   modal.appendChild(modalInfoContainer);
 
-// Here's where the excitement goes. Need to:
-// 1) Detect whether there's a search in progress
-// 2) If there is, cycle only through the search results and label the buttons accordingly
-// 3) If not, cycle through all the results
-// 1.5) There's a decision to make on how to couple the modal to the rest of the screen:
-//     a) Detect the search in this function, or
-//     b) Refactor this function to take an additional, array, argument
   const modalButtonContainer = document.createElement('div');
   modalButtonContainer.setAttribute('class','modal-btn-container');
   if (index > 0) {
@@ -235,6 +228,21 @@ const createModal = (array,index) => {
   document.body.appendChild(modalContainer);
 }
 
+const displayNoSearchResults = () => {
+  const noResultsDiv = document.createElement('div');
+  noResultsDiv.classList = 'gallery no-results';
+  noResultsDiv.setAttribute('id','no-results');
+  noResultsDiv.innerHTML = `<h3 class = "card-name">Sorry - no employee matched your search.</h3>`;
+  galleryDiv.appendChild(noResultsDiv);
+}
+
+const removeNoSearchResults = () => {
+  if (document.getElementById('no-results')) {
+    const noResultsDiv = document.getElementById('no-results');
+    noResultsDiv.parentNode.removeChild(noResultsDiv);
+  }
+}
+
 /* 
     Event handlers
 */
@@ -243,6 +251,7 @@ const filterEmployees = (event) => {
   const searchButton = document.getElementById('submit');
   const searchInput = document.getElementById('search-input');
   event.preventDefault();
+  removeNoSearchResults();
   if (searchButton.value === 'submit') {
     searchButton.value = 'display all';
     let excludedCards = Array.from(document.querySelectorAll('.card:not(.card-search-item)'));
@@ -256,6 +265,9 @@ const filterEmployees = (event) => {
       const index = parseInt(element.dataset.index);
       searchedEmployees.push(loadedEmployees[index]);
     });
+    if (searchedEmployees.length === 0) {
+      displayNoSearchResults();
+    }
   } else {
     searchButton.value = 'submit';
     let cards = Array.from(document.querySelectorAll('.card'));

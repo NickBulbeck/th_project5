@@ -8,21 +8,13 @@ Tuesday's ToDo:
 - Refactor so that the modal Prev/Next buttons recognise a Search       DONE
 - Correct the search to use only the first part of the email            DONE
 - Disable the search input while the search button is working           DONE
-- Add an appropriate response if there's naebdy in the search       ToDo
+- Add an appropriate response if there's naebdy in the search           DONE
 - Fix the bug at line 254 and find the employee fae the div             DONE
+- Add text to the modal next/prev div to mark full/Search           ToDo
+- Re-format the phone number in the modal                           ToDo
+- Decide on where to put the select list - in form or on its own    ToDo
 
 NUMBER TO DISPLAY...
 
-
-SEARCH-SENSITIVE MODAL
-
-Can either pass an array of displayable responses, or detect it in the function.
-If you pass an array... the function gets shorter, and it becomes less tightly coupled to how
-you hide or display the search.
-
-I'VE HAD AN IDEA: Create a search array in the search button function. Then, use it if it
-exists. An important counterpoint to this strategy is to clear it or declare it null when the
-search is cleared (that is, on display-all). ALSO: keep a single global [] called displayedEmployees
-that is set to all of them, or reduced by the search hingmy. This means that EVERY employee,
-when first set up, gets the class of searchItemHingmy - whatever I called it, I need to
-call it something different.
+First, hard-code something into index.html to work out the styling, and 
+how to use the supplied CSS. 
