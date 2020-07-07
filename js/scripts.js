@@ -10,7 +10,7 @@
 
 
 // Elements:
-const usersDisplayed = 64;
+const usersDisplayed = 12;
 const randomUserPhotos = 95; // Correct at the time of writing!
 const randomLegoPhotos = 9;  // Ditto!
 const galleryDiv = document.getElementById('gallery');
@@ -70,19 +70,8 @@ const getImageURL = (gender,employeeNumber) => {
 }
 
 const formatEmployeeBirthday = (rawDate) => {
-  const months = [
-    "January",
-    "Feburary",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+  const months = ["January","Feburary","March","April","May","June",
+                  "July","August","September","October","November","December"
   ]
   let yyyy = rawDate.substring(0,4);
   let mm = parseInt(rawDate.substring(5,7)) - 1;
