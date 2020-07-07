@@ -9,6 +9,7 @@ const maybeAnElement = document.querySelector('.header-text-container')
 
 
 const testFetch = (url) => {
+  let rawData = [];
   fetch(url)
       .then(checkStatus)
       .then(response => response.json())
@@ -24,7 +25,7 @@ const testFetch = (url) => {
 }
 
 
-// testFetch(randomUsers);
+testFetch(randomAPI);
 // console.log(testData);
 // console.log(maybeAFunction);
 
