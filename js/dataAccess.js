@@ -1,3 +1,14 @@
+/*
+  Remember: a Promise isn't a replacement for AJAX, nor a new way to construct HTTP
+  requests. It's a way to handle asynchronous code. Inside the Promise, you find the code
+  that sets a timeout, maybe, or goes off and calls a URL.
+
+  The major point of learning: in Promise-world, I've often seen a function 
+
+
+
+*/
+
 const randomUsers = 'https://randomuser.me/api/?results=12&exc=login&noinfo';
 let users;
 // const 
@@ -42,3 +53,6 @@ function checkStatus(response) {
 //   populateList(breedList);
 //   generateImage(randomImage);
 // })
+
+
+
