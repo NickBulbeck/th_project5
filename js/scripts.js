@@ -3,14 +3,12 @@
     font.
 
   My additional thoughts:
-  - It may be possible to get code from my own api on heroku or something like that
-  - Douglas Adams button: probably, do the random name thing.
-  - Do this as a learning exercise: that is, do it via xmlHTTPrequest, AJAX, Promise, and/or fetch()
+
 */
 
 
 // Elements:
-const usersDisplayed = 12;
+let usersDisplayed = 12;
 const randomUserPhotos = 95; // Correct at the time of writing!
 const randomLegoPhotos = 9;  // Ditto!
 const galleryDiv = document.getElementById('gallery');
@@ -87,6 +85,19 @@ const formatEmployeeAddress = (rawAddress) => {
      ${rawAddress.state}, ${rawAddress.postcode}
   `;
   return address;
+}
+
+// Turn this into an async/await function that calls data_getEmployees using ONLY the usersDisplayed
+// variable; then does the createGalleryEntry() and finishGallery() for the results.
+// For simplicity: ALL the async stuff lives in THIS file. The dataAccess file just has 
+const newloadEmployees = () => {
+  if (milliways(blub)) {
+    console.log(milliways(blub));
+  }
+} 
+
+const blub = (array) => {
+  console.log(array);
 }
 
 const loadEmployees= () => {
@@ -297,7 +308,8 @@ const onSearchInput = (event) => {
 */
 createSearch();
 prepGallery();
-loadEmployees()
+loadEmployees();
+newloadEmployees();
 
 
 

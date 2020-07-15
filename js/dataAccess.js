@@ -3,8 +3,11 @@
   requests. It's a way to handle asynchronous code. Inside the Promise, you find the code
   that sets a timeout, maybe, or goes off and calls a URL.
 
-  The major point of learning: in Promise-world, I've often seen a function 
-
+  New function: I need a data_getEmployees function.
+  For the Douglas Adams function here, I want to call data_getEmployees AFTER getting 
+  the stuff from my own randomapi account. Then, go through it and set the names and
+  email addresses accordingly. 
+  
 
 
 */
@@ -34,25 +37,7 @@ function checkStatus(response) {
   }
 }
 
-/* the gallery / directory has:
-    - image (it seems to work in the form of a url, possibly because it's cached)
-    - first name
-    - last name
-    - email
-    - city or location
-  to which the modal adds at least:
-    - cell number
-    - full/detailed address (basically, everything that's there)
-    - birthday
 
-*/
-// )
-// .then(data => {
-//   const breedList = data[0].message;
-//   const randomImage = data[1].message;
-//   populateList(breedList);
-//   generateImage(randomImage);
-// })
 
 
 

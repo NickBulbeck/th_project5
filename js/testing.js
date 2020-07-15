@@ -25,7 +25,7 @@ const testFetch = (url) => {
 }
 
 
-testFetch(randomAPI);
+// testFetch(randomAPI);
 // console.log(testData);
 // console.log(maybeAFunction);
 
