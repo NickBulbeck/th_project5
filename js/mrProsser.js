@@ -38,6 +38,31 @@ const milliways = (inputCallback) => {
 
 }
 
+const bewareOfTheLeopard = () =>{
+  const zarniwoop = document.getElementById('select-number');
+  const agrajag = document.createElement('option');
+  agrajag.setAttribute('id','option-douglasAdams');
+  agrajag.setAttribute('value','douglas-adams-option');
+  agrajag.textContent = 'Douglas Adams option';
+  zarniwoop.addEventListener('change',bigYellowBulldozer);
+  zarniwoop.appendChild(agrajag);
+}
+
+const bigYellowBulldozer = (event) => {
+  event.preventDefault;
+  if (event.target.value !== "douglas-adams-option") {
+    return;
+  }
+  console.log("In bigYellowBulldozer");
+}
+
 // console.log(milliways());
 
+/*****************************************
+**
+**  Easter egg code runs here...
+**
+******************************************/
+
+bewareOfTheLeopard()
 

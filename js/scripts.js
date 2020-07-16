@@ -7,20 +7,31 @@
 */
 
 
-// Elements:
+// Global variables:
 let usersDisplayed = 12;
 const randomUserPhotos = 95; // Correct at the time of writing!
 const randomLegoPhotos = 9;  // Ditto!
 const galleryDiv = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
-const loadedEmployees = [];
+const employeesToDisplay = [12,23,37,47,61];
+let loadedEmployees = [];
 let searchedEmployees = null;
 
 
-const createSearch = () => {
+const createOption = (parentElement,value) => {
+  let option = document.createElement('option');
+  option.value = value;
+  option.text = value;
+  option.id = `option-${value}`;
+  parentElement.appendChild(option);
+}
+
+const createForm = () => {
   let form = document.createElement('form');
   let searchInput = document.createElement('input');
   let searchSubmit = document.createElement('input');
+  let displayOptionsLabel = document.createElement('label');
+  let displayOptions = document.createElement('select');
   searchInput.setAttribute("type","search");
   searchInput.setAttribute("id","search-input");
   searchInput.setAttribute("class","search-input");
@@ -31,9 +42,21 @@ const createSearch = () => {
   searchSubmit.setAttribute("id","submit");
   searchSubmit.setAttribute("class","submit");
   form.appendChild(searchSubmit);
+  displayOptionsLabel.setAttribute("for","select-number");
+  displayOptionsLabel.textContent = "Employees per page";
+  form.appendChild(displayOptionsLabel);
+  displayOptions.setAttribute("name","select-number");
+  displayOptions.setAttribute("id","select-number");
+  
+  employeesToDisplay.forEach(value => {
+    createOption(displayOptions,value);
+  })
+  form.appendChild(displayOptions);
   searchDiv.appendChild(form);
+  displayOptions.addEventListener('change',onDisplayOptions);
   searchInput.addEventListener('input',onSearchInput);
   form.addEventListener('submit',filterEmployees);
+
 }
 
 const prepGallery = () => {
@@ -53,13 +76,14 @@ const finishGallery = () => {
 const getImageURL = (gender,employeeNumber) => {
   let factor = Math.floor(randomUserPhotos / usersDisplayed); 
   let photoNumber = employeeNumber * factor;
+  console.log(`employeeNumber: ${employeeNumber}; factor: ${factor}, photoNumber: ${photoNumber}`);
   let photoGender = '';
   if (gender === 'male') {
     photoGender = 'men';
   } else {
     photoGender = 'women';
   }
-  if (photoNumber % 3 === 0) {
+  if (photoNumber % 5 === 0) {
     photoGender = 'lego'; // I am soooooooo funny...
     photoNumber = Math.floor(Math.random() * randomLegoPhotos); 
   }
@@ -91,13 +115,24 @@ const formatEmployeeAddress = (rawAddress) => {
 // variable; then does the createGalleryEntry() and finishGallery() for the results.
 // For simplicity: ALL the async stuff lives in THIS file. The dataAccess file just has 
 const newloadEmployees = () => {
-  if (milliways(blub)) {
-    console.log(milliways(blub));
-  }
+  // if (milliways(blub)) {
+  //   console.log(milliways(blub));
+  // }
 } 
 
-const blub = (array) => {
-  console.log(array);
+
+const clearGallery = () => {
+  //empty loadedEmployees array
+  // const toClear = loadedEmployees.length;
+  console.log(loadedEmployees);
+  loadedEmployees = [];
+  // loadedEmployees.splice[0,12];
+  console.log(loadedEmployees);
+  // empty the gallery
+  const items = Array.from(galleryDiv.children);
+  items.forEach(element => {
+    element.parentNode.removeChild(element);
+  })
 }
 
 const loadEmployees= () => {
@@ -148,9 +183,7 @@ const createGalleryEntry = (employee) => {
     } else {
       modalArray = loadedEmployees;
     }
-    console.log(modalArray);
     let employeeIndex = Array.from(modalArray).indexOf(employee);
-    console.log(employee + ", index: " + employeeIndex);
     createModal(modalArray,employeeIndex);
   })
 }
@@ -303,10 +336,20 @@ const onSearchInput = (event) => {
   })
 }
 
+const onDisplayOptions = (event) => {
+  const number = parseInt(event.target.value);
+  // Because of the Douglas Adams fun option, which has its own event handler, event.target.value may be NaN
+  if (number) {
+    usersDisplayed = number;
+    clearGallery();
+    loadEmployees();
+  } 
+}
+
 /*
     The app itself...
 */
-createSearch();
+createForm();
 prepGallery();
 loadEmployees();
 newloadEmployees();
