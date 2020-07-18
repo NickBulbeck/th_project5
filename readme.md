@@ -15,12 +15,7 @@ Tuesday's ToDo:
 - Design the Douglas Adams event listener                           ToDo
 - Re-factor to get the data in dataAccess                           ToDo
 
-NUMBER TO DISPLAY...
 
-First, hard-code something into index.html to work out the styling, and 
-how to use the supplied CSS.
-Select list can go inside the form - there's an e.preventDefault() on it after all.
-And I think it'll make it easier to style.
 
 FULL/SEARCH...
 

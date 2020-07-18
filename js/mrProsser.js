@@ -1,6 +1,5 @@
-// Don't know what this is going to do yet!
 
-const milliways = (inputCallback) => {
+const milliways = () => {
   const zaphod = () => {
     let benjyMouse = [];
     for (let i=1; i<= 42; i++) {
@@ -54,6 +53,12 @@ const bigYellowBulldozer = (event) => {
     return;
   }
   console.log("In bigYellowBulldozer");
+  // This needs to set usersDisplayed to 42, then fetch stuff via the randomuser api using 
+  // https://randomuser.me/api/?results=${usersDisplayed}&exc=login&noinfo
+  // Then it needs to fetch stuff that's currently in milliways() and incorporate the new
+  // names into the standard array. 
+  // Then I need a way of displaying that. Maybe return the array and re-write loadEmployees
+  // as an async/await call to here and dataAccess?
 }
 
 // console.log(milliways());
