@@ -76,7 +76,6 @@ const finishGallery = () => {
 const getImageURL = (gender,employeeNumber) => {
   let factor = Math.floor(randomUserPhotos / usersDisplayed); 
   let photoNumber = employeeNumber * factor;
-  console.log(`employeeNumber: ${employeeNumber}; factor: ${factor}, photoNumber: ${photoNumber}`);
   let photoGender = '';
   if (gender === 'male') {
     photoGender = 'men';
@@ -114,21 +113,14 @@ const formatEmployeeAddress = (rawAddress) => {
 // Turn this into an async/await function that calls data_getEmployees using ONLY the usersDisplayed
 // variable; then does the createGalleryEntry() and finishGallery() for the results.
 // For simplicity: ALL the async stuff lives in THIS file. The dataAccess file just has 
-const newloadEmployees = () => {
-  // if (milliways(blub)) {
-  //   console.log(milliways(blub));
-  // }
+const newLoadEmployees = () => {
+  data_getEmployees(usersDisplayed);
+
 } 
 
 
 const clearGallery = () => {
-  //empty loadedEmployees array
-  // const toClear = loadedEmployees.length;
-  console.log(loadedEmployees);
   loadedEmployees = [];
-  // loadedEmployees.splice[0,12];
-  console.log(loadedEmployees);
-  // empty the gallery
   const items = Array.from(galleryDiv.children);
   items.forEach(element => {
     element.parentNode.removeChild(element);
@@ -343,6 +335,7 @@ const onDisplayOptions = (event) => {
     usersDisplayed = number;
     clearGallery();
     loadEmployees();
+    newLoadEmployees();
   } 
 }
 
@@ -352,7 +345,6 @@ const onDisplayOptions = (event) => {
 createForm();
 prepGallery();
 loadEmployees();
-newloadEmployees();
 
 
 

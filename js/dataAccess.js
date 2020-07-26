@@ -16,7 +16,19 @@ const randomUsers = 'https://randomuser.me/api/?results=12&exc=login&noinfo';
 let users;
 // const 
 
-const data_getUser = (url) => {
+const data_getEmployees = (listLength) => {
+  const url = `https://randomuser.me/api/?results=${listLength}&exc=login&noinfo`;
+  /*
+    This needs to return a Promise that has, as its function argument, something that
+    gets stuff fae randomuser using the listLength. If there's nane, it sends an error.
+    If there is data returned, it sends it.
+    This promise is then consumed by loadEmployees in the main scripts.js in an 
+    async/wait function.
+    When I console.log(milliways()), it come back undefined because the xmlHttpRequest does
+    its stuff asynchronously. That is, the console.log happens immediately after the milliways()
+    call has begun. But BEFORE it's finished, and come back with data.
+
+  */
   // return fetch(url)
   //   .then(checkStatus)
   //   .then(response => response.json())
