@@ -113,8 +113,18 @@ const formatEmployeeAddress = (rawAddress) => {
 // Turn this into an async/await function that calls data_getEmployees using ONLY the usersDisplayed
 // variable; then does the createGalleryEntry() and finishGallery() for the results.
 // For simplicity: ALL the async stuff lives in THIS file. The dataAccess file just has 
-const newLoadEmployees = () => {
-  data_getEmployees(usersDisplayed);
+const loadEmployees = () => {
+  clearGallery();
+  prepGallery();
+  data_getEmployees(usersDisplayed)
+  .then( data => {
+    const employees = data.results;
+    employees.forEach(employee => {
+      createGalleryEntry(employee);
+    })
+    finishGallery();
+  })
+  .catch(createErrorMessage);
 
 } 
 
@@ -127,18 +137,8 @@ const clearGallery = () => {
   })
 }
 
-const loadEmployees= () => {
-  const url = `https://randomuser.me/api/?results=${usersDisplayed}&exc=login&noinfo`;
-  fetch(url)
-    // .then(checkStatus) - do this later
-    .then(response => response.json())
-    .then(data => {
-      let employees = data.results;
-      employees.forEach(employee => {
-        createGalleryEntry(employee);
-      });
-      finishGallery();
-    })
+const createErrorMessage = (error) => {
+  galleryDiv.textContent = `Aaaargh! Error... ${error}`;
 }
 
 const createGalleryEntry = (employee) => {
@@ -330,12 +330,11 @@ const onSearchInput = (event) => {
 
 const onDisplayOptions = (event) => {
   const number = parseInt(event.target.value);
-  // Because of the Douglas Adams fun option, which has its own event handler, event.target.value may be NaN
+  // Because of the Douglas Adams 'fun' option, which has its own event handler, event.target.value
+  // may be NaN. In this case, onDisplayOptions() just ignores it.
   if (number) {
     usersDisplayed = number;
-    clearGallery();
     loadEmployees();
-    newLoadEmployees();
   } 
 }
 

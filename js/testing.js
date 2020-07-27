@@ -1,6 +1,6 @@
 const gitHub = `https://github.com/NickBulbeck/th_project5/tree/master/blub`;
 const testURL = 'https://dog.ceo/api/breeds/list';
-const randomAPI = 'https://randomapi.com/api/2d3d134dea88edb7fa46222808ec8ff0';
+// const randomAPI = 'https://randomapi.com/api/2d3d134dea88edb7fa46222808ec8ff0';
 
 let testData = null;
 let maybeAFunction = null;
@@ -29,3 +29,16 @@ const testFetch = (url) => {
 // console.log(testData);
 // console.log(maybeAFunction);
 
+const OLDloadEmployees= () => {
+  const url = `https://randomuser.me/api/?results=${usersDisplayed}&exc=login&noinfo`;
+  fetch(url)
+    // .then(checkStatus) - do this later
+    .then(response => response.json())
+    .then(data => {
+      let employees = data.results;
+      employees.forEach(employee => {
+        createGalleryEntry(employee);
+      });
+      finishGallery();
+    })
+}
