@@ -17,8 +17,8 @@
 // const 
 
 const data_getEmployees = (listLength) => {
-  // const url = `https://randomuser.me/api/?results=${listLength}&exc=login&noinfo`; // correct
-  const url = `https://randomusr.me/api/?results=${listLength}&exc=login&noinfo`; // error
+  const url = `https://randomuser.me/api/?results=${listLength}&exc=login&noinfo`; // correct
+  // const url = `https://randomusr.me/api/?results=${listLength}&exc=login&noinfo`; // error
   let employeeData;
   const employees = new Promise( function(resolve,reject) {
     let xml = new XMLHttpRequest();
@@ -29,7 +29,7 @@ const data_getEmployees = (listLength) => {
           employeeData = JSON.parse(xml.responseText);
           resolve(employeeData);
         } else {
-          reject(xml.statusText);
+          reject(new Error(xml.statusText));
         }
       }
     }

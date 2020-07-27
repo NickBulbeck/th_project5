@@ -114,8 +114,11 @@ const formatEmployeeAddress = (rawAddress) => {
 // variable; then does the createGalleryEntry() and finishGallery() for the results.
 // For simplicity: ALL the async stuff lives in THIS file. The dataAccess file just has 
 const loadEmployees = () => {
+  console.log("Before clearGallery");
   clearGallery();
+  console.log("After clearGallery");
   prepGallery();
+  console.log("After prepGallery");
   data_getEmployees(usersDisplayed)
   .then( data => {
     const employees = data.results;
@@ -124,12 +127,13 @@ const loadEmployees = () => {
     })
     finishGallery();
   })
-  .catch(createErrorMessage);
+  .catch( error => createErrorMessage(error));
 
 } 
 
 
 const clearGallery = () => {
+  galleryDiv.textContent = "";
   loadedEmployees = [];
   const items = Array.from(galleryDiv.children);
   items.forEach(element => {
@@ -138,7 +142,8 @@ const clearGallery = () => {
 }
 
 const createErrorMessage = (error) => {
-  galleryDiv.textContent = `Aaaargh! Error... ${error}`;
+  console.log(error);
+  galleryDiv.textContent = `Aaaargh! Error... ${error.message}`;
 }
 
 const createGalleryEntry = (employee) => {
