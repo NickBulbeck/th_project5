@@ -23,13 +23,26 @@ header {
     padding: 15px 5px 5px;
 }
 
+/* EXPERIMENTAL STUFF */
+
+.header-text-container,
+.search-container {
+
+}
+
+form {
+    margin-top: 5px;
+}
+
+/* END OF EXPERIMENTAL STUFF */
+
 .header-inner-container {
     max-width: 1180px;
     margin: auto;
 }
 
 header h1 {
-    font-size: 1.25em;
+    font-size: 1.5em;
     color: rgba(50, 50, 50, 0.9);
     margin-top: 35px;
 }
@@ -41,6 +54,7 @@ header h1 {
     max-width: 20rem;
     transition: .4s ease-out;
     outline: none;
+    margin: 2px;
 }
 
 .search-input:active, .search-input:hover, .search-input:focus {
@@ -55,6 +69,11 @@ header h1 {
     border: 1px solid rgba(200, 200, 200, 0.9);
     transition: .4s ease-out;
     outline: none;
+    margin: 2px;
+}
+
+label, select {
+    margin: 2px;
 }
 
 .search-submit:active, .search-submit:hover, .search-submit:focus {
