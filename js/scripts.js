@@ -40,7 +40,7 @@ const createForm = () => {
   searchSubmit.setAttribute("type","submit");
   searchSubmit.setAttribute("value","submit");
   searchSubmit.setAttribute("id","submit");
-  searchSubmit.setAttribute("class","submit");
+  searchSubmit.setAttribute("class","search-submit");
   form.appendChild(searchSubmit);
   displayOptionsLabel.setAttribute("for","select-number");
   displayOptionsLabel.textContent = "Employees per page";
@@ -52,11 +52,11 @@ const createForm = () => {
     createOption(displayOptions,value);
   })
   form.appendChild(displayOptions);
-  searchDiv.appendChild(form);
   displayOptions.addEventListener('change',onDisplayOptions);
   searchInput.addEventListener('input',onSearchInput);
   form.addEventListener('submit',filterEmployees);
-
+  searchDiv.appendChild(form);
+  document.body.insertBefore(searchDiv,galleryDiv);
 }
 
 const prepGallery = () => {
@@ -64,6 +64,7 @@ const prepGallery = () => {
   loading.textContent = "Loading employee details...";
   galleryDiv.innerHTML = '';
   galleryDiv.appendChild(loading);
+  document.getElementsByTagName('H1')[0].textContent = "AWESOME STARTUP EMPLOYEE DIRECTORY";
 }
 
 const finishGallery = () => {
