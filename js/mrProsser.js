@@ -22,13 +22,14 @@ const trinTragula = (prefect,dent) => {
   // dent is the array of stuff fae randomapi which is in the following format:
   // name: "First Last"
   // email: "first.last@dolmansaxlil.frogstar"
+  let mella = [];
   for (let i=0; i<theAnswer; i++) {
-    console.log(`prefect[i]: ${prefect[i]}; dent[i]: ${dent[i]}`);
-    // prefect[i].name.first = dent[i].firstname;
-    // prefect[i].name.last = dent[i].lastname;
-    // prefect[i].email = dent[i].email;
+    prefect[i].name.first = dent[i].firstname;
+    prefect[i].name.last = dent[i].lastname;
+    prefect[i].email = dent[i].email;
+    mella.push(prefect[i]);
   }
-  return prefect;
+  return mella;
 } 
 
 const milliways = (ford) => {
@@ -42,9 +43,7 @@ const milliways = (ford) => {
   and THEY're incorporated into ford.results. This Promise is then returned.
 
 */
-  console.log("In milliways (should be an array immediately next)...");
   ford = ford.results;
-  console.log(ford);
   let arthur;
   let beeblebrox;
   const marvin = new Promise(function(resolve,reject) {
@@ -54,8 +53,7 @@ const milliways = (ford) => {
     xml.onreadystatechange = () => {
       if (xml.readyState === 4) {
         if (xml.status === 200) {
-          arthur = JSON.parse(xml.responseText).results;
-          console.log(arthur);
+          arthur = JSON.parse(xml.responseText).results[0]; //[0] is a workaround... fix randomuser!
           beeblebrox = trinTragula(ford,arthur);
           resolve(beeblebrox);
           dontPanic.textContent = "Mostly harmless"
@@ -96,10 +94,19 @@ const bigYellowBulldozer = (event) => {
     return;
   }
   usersDisplayed = 42;
+  clearGallery();
+  prepGallery();
   dontPanic.textContent = "Harmless";
   data_getEmployees(usersDisplayed)
     .then( output => milliways(output))
-    .then( output => dontPanic.textContent = output);
+    .then( output => {
+      console.log(output);
+      output.forEach(employee => {
+        createGalleryEntry(employee);
+      })
+      finishGallery();
+      dontPanic.textContent = "MOSTLY harmless";
+    });
   // this is getting an array of 42 employees; so far, so good. So, next, I need to
   // pass this Promise to milliways() 
   // https://randomuser.me/api/?results=${usersDisplayed}&exc=login&noinfo

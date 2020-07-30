@@ -1,17 +1,4 @@
-const getRandomColour = () => {
-  let red = Math.floor(Math.random() * 255);
-  let green = Math.floor(Math.random() * 255);
-  let blue = Math.floor(Math.random() * 255);
-  let rgbColor = `rgb(${red},${green},${blue}`;
-  return rgbColor;
-}
-/* The actual app:
-  - Use the stylings added, but change at least one of color, background-color, box or text shadows,
-    font.
 
-  My additional thoughts:
-
-*/
 
 
 // Global variables:
