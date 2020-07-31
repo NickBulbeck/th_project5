@@ -105,9 +105,7 @@ const formatEmployeeAddress = (rawAddress) => {
   return address;
 }
 
-// Turn this into an async/await function that calls data_getEmployees using ONLY the usersDisplayed
-// variable; then does the createGalleryEntry() and finishGallery() for the results.
-// For simplicity: ALL the async stuff lives in THIS file. The dataAccess file just has 
+
 const loadEmployees = () => {
   clearGallery();
   prepGallery();
@@ -119,8 +117,7 @@ const loadEmployees = () => {
     })
     finishGallery();
   })
-  .catch( error => createErrorMessage(error));
-
+  .catch(error => createErrorMessage(error));
 } 
 
 

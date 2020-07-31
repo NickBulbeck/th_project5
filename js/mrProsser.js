@@ -3,7 +3,8 @@
 const randomAPI =          'https://randomapi.com/api/2d3d134dea88edb7fa46222808ec8ff0'; // correct
 const randomAPIwithError = 'https://randomapi.com/api/2d3d134dea88edb7fa46222808ec8ff'; // missing final 0
 const dontPanic = document.getElementsByTagName('H1')[0];
-const theAnswer = 42;
+const theAnswer = 42; // Well, duh.
+let godsLastMessage = "";
 
 const zaphod = () => {
   let benjyMouse = [];
@@ -56,11 +57,11 @@ const milliways = (ford) => {
           arthur = JSON.parse(xml.responseText).results[0]; //[0] is a workaround... fix randomuser!
           beeblebrox = trinTragula(ford,arthur);
           resolve(beeblebrox);
-          dontPanic.textContent = "Mostly harmless"
+          godsLastMessage = "Mostly harmless";
         } else {
           beeblebrox = trinTragula(ford,zaphod());
           resolve(beeblebrox);
-          dontPanic.textContent = "Mostly harmless"
+          godsLastMessage = "An error occured while accessing the Central Galactic Database. Regrettably, your planet has been scheduled for demolition.";
         }
       }
     }
@@ -88,6 +89,16 @@ const bewareOfTheLeopard = () =>{
   zarniwoop.appendChild(agrajag);
 }
 
+const imFeelingVeryDepressed = (error) => {
+  console.log("In Douglas Adams error handler...")
+  const diode = document.createElement('div');
+  let vortex = `According to the Marketing Division of the Sirius Cybernetics Corporation: `
+  diode.classList.add('perspective');
+  vortex += `${error.message}`;
+  diode.textContent = vortex;
+  document.body.appendChild(diode);
+}
+
 const bigYellowBulldozer = (event) => {
   event.preventDefault;
   if (event.target.value !== "douglas-adams-option") {
@@ -105,20 +116,9 @@ const bigYellowBulldozer = (event) => {
         createGalleryEntry(employee);
       })
       finishGallery();
-      dontPanic.textContent = "MOSTLY harmless";
-    });
-  // this is getting an array of 42 employees; so far, so good. So, next, I need to
-  // pass this Promise to milliways() 
-  // https://randomuser.me/api/?results=${usersDisplayed}&exc=login&noinfo
-
-/*
-  prepGallery() is called in loadEmployees; this creates the loading employee details... text. 
-  Then, data_getEmployees is called, returns a promise, which is consumed by a .then method.
-  It's in this method, that consumes a promise, that the loading employee details... text is
-  removed. So, "Harmless" needs to be replaced by "Mostly harmless" in a function that consumes
-  the output of a Promise.
-*/
-
+      dontPanic.textContent = godsLastMessage;
+    })
+    .catch(error => imFeelingVeryDepressed(error));
 }
 
 
