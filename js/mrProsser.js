@@ -19,10 +19,6 @@ const zaphod = () => {
 }
 
 const trinTragula = (prefect,dent) => {
-  // prefect is the randomuser array lf 42 folk;
-  // dent is the array of stuff fae randomapi which is in the following format:
-  // name: "First Last"
-  // email: "first.last@dolmansaxlil.frogstar"
   let mella = [];
   for (let i=0; i<theAnswer; i++) {
     prefect[i].name.first = dent[i].firstname;
@@ -34,16 +30,6 @@ const trinTragula = (prefect,dent) => {
 } 
 
 const milliways = (ford) => {
-/*
-  So: firstly, consumes a promise (ford) which comes in with the output of data_getEmployees.
-  Need a way of handling what happens when this is rejected. Actually, I need to decide what
-  happens when it's rejected. 
-  Anyway: happy path means that a Promise is created just like in data_getEmployees. 
-  Unlike there, however, this Promise is not rejected: it either returns 42 random names, in which
-  case they're incorporated into ford.results (or whatever), or it doesn't in which case zaphod is called
-  and THEY're incorporated into ford.results. This Promise is then returned.
-
-*/
   ford = ford.results;
   let arthur;
   let beeblebrox;
@@ -92,10 +78,12 @@ const bewareOfTheLeopard = () =>{
 const imFeelingVeryDepressed = (error) => {
   console.log("In Douglas Adams error handler...")
   const diode = document.createElement('div');
-  let vortex = `According to the Marketing Division of the Sirius Cybernetics Corporation: `
+  let vortex = `<p>According to the Marketing Division of the Sirius Cybernetics Corporation: </p>`
   diode.classList.add('perspective');
-  vortex += `${error.message}`;
-  diode.textContent = vortex;
+  vortex += `<p><span style="font-family:monospace">${error.message} - we're doomed!"</span></p>
+             <p>They'll probably be the first against the wall when the revolution comes; nevertheless,
+             your planet has, regrettably, been scheduled for demolition.</p>`;
+  diode.innerHTML = vortex;
   document.body.appendChild(diode);
 }
 
@@ -120,7 +108,6 @@ const bigYellowBulldozer = (event) => {
     })
     .catch(error => imFeelingVeryDepressed(error));
 }
-
 
 /*****************************************
 **
