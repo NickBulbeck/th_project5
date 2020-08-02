@@ -330,7 +330,7 @@ const onSearchInput = (event) => {
 const onDisplayOptions = (event) => {
   const number = parseInt(event.target.value);
   // Because of the Douglas Adams 'fun' option, which has its own event handler, event.target.value
-  // may be NaN. In this case, onDisplayOptions() just ignores it.
+  // may be NaN. In this case, onDisplayOptions() needs to ignore it.
   if (number) {
     usersDisplayed = number;
     loadEmployees();
