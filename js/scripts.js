@@ -1,17 +1,23 @@
 
 
-
 // Global variables:
 let usersDisplayed = 12;
 const randomUserPhotos = 95; // Correct at the time of writing!
 const randomLegoPhotos = 9;  // Ditto!
 const galleryDiv = document.getElementById('gallery');
 const searchDiv = document.querySelector('.search-container');
-const employeesToDisplay = [12,23,37,47,61];
+const employeesToDisplay = [12,23,37,47,61]; // Default of 12, plus four nice prime numbers.
 let loadedEmployees = [];
 let searchedEmployees = null;
 
-
+/**************************************************************************************
+* createOption: Creates and appends a select-list option, and appends it to the list.
+*               Have you ever noticed that these select lists, whilst common on many
+*               websites, never allow you to display a prime number of entries? Are
+*               you frustrated with this? I'm here to help!
+* @params: parentElement: select list element
+*          value: string or integer
+***************************************************************************************/
 const createOption = (parentElement,value) => {
   let option = document.createElement('option');
   option.value = value;
@@ -20,6 +26,13 @@ const createOption = (parentElement,value) => {
   parentElement.appendChild(option);
 }
 
+/**************************************************************************************
+* createForm: Creates and appends the form element containing the search function and
+*             the items-per-page select list.
+*             The select list isn't part of the rubric, but I wanted to add one as it
+*             would be normal to see it on a site like this. Also, it contains the 
+*             Douglas-Adams-themed easter egg.
+***************************************************************************************/
 const createForm = () => {
   let form = document.createElement('form');
   let searchInput = document.createElement('input');
@@ -53,6 +66,23 @@ const createForm = () => {
   document.body.insertBefore(searchDiv,galleryDiv);
 }
 
+/**************************************************************************************
+* clearGallery: Empties all the card elements from the gallery. Could maybe just set
+*               its .innerHTML to '', but that always feels a bit... shallow.
+***************************************************************************************/
+const clearGallery = () => {
+  loadedEmployees = [];
+  const items = Array.from(galleryDiv.children);
+  items.forEach(element => {
+    element.parentNode.removeChild(element);
+  })
+}
+
+/**************************************************************************************
+* prepGallery: Clears the gallery div of content prior to a page-refresh or the loading
+*              of a new set of employees, and sets placeholder content pending the 
+*              completion of async load operation(s).
+***************************************************************************************/
 const prepGallery = () => {
   const loading = document.createElement('h2');
   loading.textContent = "Loading employee details...";
@@ -61,6 +91,10 @@ const prepGallery = () => {
   document.getElementsByTagName('H1')[0].textContent = "AWESOME STARTUP EMPLOYEE DIRECTORY";
 }
 
+/**************************************************************************************
+* finishGallery: Removes temporary content (that's displayed while async load operations
+                 are running) from the gallery div
+***************************************************************************************/
 const finishGallery = () => {
   const loading = galleryDiv.getElementsByTagName('h2')[0];
   if (loading) {
@@ -68,6 +102,17 @@ const finishGallery = () => {
   }
 }
 
+/**************************************************************************************
+* getImageURL: There's no actual need for this function. I could just use the random
+*              portrait url supplied in each randomuser employee. BUT, probability
+*              being what it is, you keep finding that - even with as few as 12
+*              employees - the same photo is appended to two different employees on the
+*              same screen. This was kind of bugging me. So I added this function to
+*              make sure that can't happen. Just a bit of fun.
+* @params: gender - string, either 'male' or 'female'
+*          employeeNumber - integer, signifying number of employees to display
+* @return: url (specific to randomuser.me).
+***************************************************************************************/
 const getImageURL = (gender,employeeNumber) => {
   let factor = Math.floor(randomUserPhotos / usersDisplayed); 
   let photoNumber = employeeNumber * factor;
@@ -78,13 +123,18 @@ const getImageURL = (gender,employeeNumber) => {
     photoGender = 'women';
   }
   if (photoNumber % 5 === 0) {
-    photoGender = 'lego'; // I am soooooooo funny...
+    photoGender = 'lego'; // Come on; EVERYONE loves Lego people!
     photoNumber = Math.floor(Math.random() * randomLegoPhotos); 
   }
   let url = `https://randomuser.me/api/portraits/${photoGender}/${photoNumber}.jpg`;
   return url;
 }
 
+/**************************************************************************************
+* formatEmployeeBirthday: I hope this name is self-explanatory.
+* @params: String, containing date in the form yyyy-mm-ddThh:mm:ss.123Z
+* @return: String, containing date in the form dd mmm yyyy
+***************************************************************************************/
 const formatEmployeeBirthday = (rawDate) => {
   const months = ["January","Feburary","March","April","May","June",
                   "July","August","September","October","November","December"
@@ -93,10 +143,15 @@ const formatEmployeeBirthday = (rawDate) => {
   let mm = parseInt(rawDate.substring(5,7)) - 1;
   let dd = rawDate.substring(8,10);
   let mmm = months[mm];
-  let date = `${dd} ${mmm} ${yyyy}`;
-  return date;
+  let formattedDate = `${dd} ${mmm} ${yyyy}`;
+  return formattedDate;
 }
 
+/**************************************************************************************
+* formatEmployeeAddress: I hope this name is self-explanatory.
+* @params: json object, containing unformatted address   
+* @return: String, containing formatted address
+***************************************************************************************/
 const formatEmployeeAddress = (rawAddress) => {
   let address = `
     ${rawAddress.street.number} ${rawAddress.street.name}, ${rawAddress.city},
@@ -106,29 +161,10 @@ const formatEmployeeAddress = (rawAddress) => {
 }
 
 
-const loadEmployees = () => {
-  clearGallery();
-  prepGallery();
-  data_getEmployees(usersDisplayed)
-  .then( data => {
-    const employees = data.results;
-    employees.forEach(employee => {
-      createGalleryEntry(employee);
-    })
-    finishGallery();
-  })
-  .catch(error => createErrorMessage(error));
-} 
-
-
-const clearGallery = () => {
-  loadedEmployees = [];
-  const items = Array.from(galleryDiv.children);
-  items.forEach(element => {
-    element.parentNode.removeChild(element);
-  })
-}
-
+/**************************************************************************************
+* createErrorMessage: 
+* @params: error object
+***************************************************************************************/
 const createErrorMessage = (error) => {
   clearGallery();
   const errorHeading = document.createElement('H2');
@@ -140,6 +176,10 @@ const createErrorMessage = (error) => {
   galleryDiv.appendChild(errorLament);
 }
 
+/**************************************************************************************
+* createGalleryEntry: creates a single card element in the gallery.
+* @params: employee - employee object as supplied by randomuser.net
+***************************************************************************************/
 const createGalleryEntry = (employee) => {
   loadedEmployees.push(employee);
   const employeeIndex = loadedEmployees.length - 1;
@@ -179,6 +219,14 @@ const createGalleryEntry = (employee) => {
   })
 }
 
+/**************************************************************************************
+* createModal: The world's longest single JavaScript function ever. Displays a modal
+*              with expanded details of a single employee.
+* @params: array - array of employee objects (each one as returned from randomuser.net).
+*          index - the position of the single employee in the above array. The reason 
+*                  this is not simply calclated using .indexOf() is historical. This will
+*                  be re-factored before the Project is submitted, as it's terrible.
+***************************************************************************************/
 const createModal = (array,index) => {
   if (document.querySelector('.modal-container')) {
     const existingModal = document.querySelector('.modal-container');
@@ -252,6 +300,10 @@ const createModal = (array,index) => {
   document.body.appendChild(modalContainer);
 }
 
+/**************************************************************************************
+* displayNoSearchResults: Sorry, but I can't be bothered to add a comment for this
+*                         function.
+***************************************************************************************/
 const displayNoSearchResults = () => {
   const noResultsDiv = document.createElement('div');
   noResultsDiv.classList = 'gallery no-results';
@@ -260,6 +312,9 @@ const displayNoSearchResults = () => {
   galleryDiv.appendChild(noResultsDiv);
 }
 
+/**************************************************************************************
+* removeNoSearchResults: Clears the "no search results" message
+***************************************************************************************/
 const removeNoSearchResults = () => {
   if (document.getElementById('no-results')) {
     const noResultsDiv = document.getElementById('no-results');
@@ -271,6 +326,12 @@ const removeNoSearchResults = () => {
     Event handlers
 */
 
+/**************************************************************************************
+* filterEmployees: event listener for the form. Hides all employees except 
+*                  those that match the input search text. Activated by the 'submit'
+*                  button.
+* @params: event object - 'submit' event
+***************************************************************************************/
 const filterEmployees = (event) => {
   const searchButton = document.getElementById('submit');
   const searchInput = document.getElementById('search-input');
@@ -305,6 +366,10 @@ const filterEmployees = (event) => {
   }
 }
 
+/**************************************************************************************
+* onSearchInput: event-listener for the search input field
+* @params: event object - 'input' event
+***************************************************************************************/
 const onSearchInput = (event) => {
   let inputSoFar = event.target.value;
   let allEmails = Array.from(document.querySelectorAll('.email'));
@@ -327,6 +392,10 @@ const onSearchInput = (event) => {
   })
 }
 
+/**************************************************************************************
+* onDisplayOptions: event-listner for the items-per-page select list
+* @params: event object - in practice, will be a change event
+***************************************************************************************/
 const onDisplayOptions = (event) => {
   const number = parseInt(event.target.value);
   // Because of the Douglas Adams 'fun' option, which has its own event handler, event.target.value
@@ -340,8 +409,27 @@ const onDisplayOptions = (event) => {
 /*
     The app itself...
 */
+
+/**************************************************************************************
+* loadEmployees: the primary outer function of the app. 
+***************************************************************************************/
+const loadEmployees = () => {
+  clearGallery();
+  prepGallery();
+  data_getEmployees(usersDisplayed)
+  .then( data => {
+    const employees = data.results;
+    employees.forEach(employee => {
+      createGalleryEntry(employee);
+    })
+    finishGallery();
+  })
+  .catch(error => createErrorMessage(error));
+} 
+
+// And finally:
+
 createForm();
-prepGallery();
 loadEmployees();
 
 

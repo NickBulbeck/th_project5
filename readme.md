@@ -1,12 +1,15 @@
-Friday's ToDo:
+Known bugs:
 
-- Add text to the modal next/prev div to mark full/Search           ToDo
-- Fix bug whereby a single search result has an empty prev/next div ToDo
-- Shrink the createModal function                                   ToDo
-- Change the button text 
-
-FULL/SEARCH...
-
-First, find out if there's a search or not. Think I can do this if search-input.value isn't ''.
-Then, set up the text (cycle through search results, cycle through all students) accordingly.
-Then create an H3 element or something that looks right, and append it to the right element.
+- Modal 			When there's only one search result, there is an "empty box" div around where the prev/next
+         			buttons would be if they existed. Looks untidy.
+- select list 		When the user reloads the page using the select list, the search input needs to be reset
+                    so that the button always says "submit" (not "display all"), and the input field is 
+                    enabled and has the correct "Search..." placeholder text.
+- Hitchhiker emails The email addresses are all too long to fit in the card, and they overflow. Looks a bit 
+                    messy. (Only applies when the Douglas Adams option is selected, mind.)
+- Exceeds			There's no real alternative font, shading, colour-scheme etc to meet the final rubric for
+					Exceeds. Can't really decide on one either.
+- createModal		Needs re-factoring so that the array it uses is global.
+- easter egg		When there's an error, there's no way to re-set the page other than by re-loading it.
+					This is very poor; there needs to be at least a button or something.
+- clearGallery / prepGallery - these functions seem to do practically the same thing. Don't need both!
