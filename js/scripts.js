@@ -79,6 +79,21 @@ const clearGallery = () => {
 }
 
 /**************************************************************************************
+* clearSearch: Re-sets the search input box
+***************************************************************************************/
+const clearSearch = () => {
+  searchInput = document.getElementById('search-input');
+  searchButton = document.getElementById('submit');
+  searchInput.setAttribute("placeholder","Search...");
+  searchInput.value = "";
+  searchInput.disabled = false;
+  searchButton.value = "Search";
+  searchedEmployees = null;
+}
+
+
+
+/**************************************************************************************
 * prepGallery: Clears the gallery div of content prior to a page-refresh or the loading
 *              of a new set of employees, and sets placeholder content pending the 
 *              completion of async load operation(s).
@@ -172,6 +187,7 @@ const createErrorMessage = (error) => {
   errorHeading.textContent = `Aaaargh! ${error.message}`;
   errorLament.innerHTML = `Did you see that??? '<em>${error.message}</em>' ???
                              We're doomed! DOOMED, I TELL YOU !!!`;
+                             // OK; but I gotta be me.
   galleryDiv.appendChild(errorHeading);
   galleryDiv.appendChild(errorLament);
 }
@@ -301,7 +317,7 @@ const createModal = (array,index) => {
 }
 
 /**************************************************************************************
-* displayNoSearchResults: Sorry, but I can't be bothered to add a comment for this
+* displayNoSearchResults: Can't be bothered to add a comment for this
 *                         function.
 ***************************************************************************************/
 const displayNoSearchResults = () => {
@@ -415,6 +431,7 @@ const onDisplayOptions = (event) => {
 ***************************************************************************************/
 const loadEmployees = () => {
   clearGallery();
+  clearSearch();
   prepGallery();
   data_getEmployees(usersDisplayed)
   .then( data => {
