@@ -21,14 +21,25 @@ body {
 
 header {
     padding: 15px 5px 5px;
+    background-color: firebrick;
+    border-bottom:2px solid #404040;
+    border-radius: 0 0 10px 10px;
 }
 
 form {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
+    margin: 0 auto 1.5rem;
+    border: 2px solid #404040;
+    background-color: firebrick;
+    max-width: 80%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    color: #fff;
 }
 
-/* END OF EXPERIMENTAL STUFF */
+label {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
 
 .header-inner-container {
     max-width: 1180px;
@@ -42,6 +53,7 @@ header h1 {
     font-size: 2.5rem;
     color: rgba(50, 50, 50, 0.9);
     margin-top: 1.5rem;
+    color: #fff;
 }
 
 .search-input {
@@ -91,6 +103,7 @@ label, select {
     width: 100%;
     max-width: 1200px;
     margin: auto;
+    back
 }
   
 .card {
