@@ -1,8 +1,20 @@
-Known bugs:
+Public API demo project
+_______________________
 
-- Exceeds			There's no real alternative font, shading, colour-scheme etc to meet the final rubric for
-					Exceeds. Can't really decide on one either.
-- createModal		Needs re-factoring so that the array it uses is global.
-- easter egg		When there's an error, there's no way to re-set the page other than by re-loading it.
-					This is very poor; there needs to be at least a button or something.
-- clearGallery / prepGallery - these functions seem to do practically the same thing. Don't need both!
+Notes for the reader...
+
+Additional features
+-------------------
+I've added a select list so that the user can display more than the default 12 employees. There's a small
+range of interesting prime numbers to choose from. 
+There is a Hitch-Hiker's Guide to the Galaxy-themed 'easter egg' that is accessed via the Douglas Adams option
+on the same select list. It calls a second api to retrieve randomly-generated, but pronounceable, names in the style of Hitch-Hiker characters.
+I've gone for a sort of reddish colour-scheme.
+
+
+Planned upgrades
+----------------
+The clearGallery and prepGallery functions do almost the same thing and will be refactored. This is what 
+happens when you spent too long on a project!
+At the moment, the only way to recover from an error on the Douglas Adams option is to refresh the page.
+A re-try option will be added.
