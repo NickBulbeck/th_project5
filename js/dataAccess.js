@@ -13,8 +13,7 @@
 ***************************************************************************************/
 
 const data_getEmployees = (listLength) => {
-  const url = `https://randomuser.me/api/?results=${listLength}&exc=login&noinfo`; // correct
-  // const url = `https://randomusr.me/api/?results=${listLength}&exc=login&noinfo`; // error (for testing)
+  const url = `https://randomuser.me/api/?results=${listLength}&exc=login&noinfo`; 
   let employeeData;
   const employees = new Promise( function(resolve,reject) {
     let xml = new XMLHttpRequest();

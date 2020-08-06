@@ -354,9 +354,6 @@ const removeNoSearchResults = () => {
   }
 }
 
-/* 
-    Event handlers
-*/
 
 /**************************************************************************************
 * filterEmployees: event listener for the form. Hides all employees except 
@@ -438,9 +435,7 @@ const onDisplayOptions = (event) => {
   } 
 }
 
-/*
-    The app itself...
-*/
+
 
 /**************************************************************************************
 * loadEmployees: the primary outer function of the app. 

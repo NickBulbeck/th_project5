@@ -14,9 +14,12 @@ html, body {
 }
 
 body {
+    background-color: #2388a0;
+}
+
+body {
     font-family: "Nunito", sans-serif;
     text-align: center;
-    background: rgba(235, 235, 235, 0.9);
 }
 
 header {
@@ -51,9 +54,12 @@ label {
 
 header h1 {
     font-size: 2.5rem;
-    color: rgba(50, 50, 50, 0.9);
     margin-top: 1.5rem;
     color: #fff;
+}
+
+h2 {
+
 }
 
 .search-input {
@@ -103,7 +109,11 @@ label, select {
     width: 100%;
     max-width: 1200px;
     margin: auto;
-    back
+    background-color: firebrick;
+    border: 2px solid #404040;
+    border-radius: 10px;
+    padding-top:1rem;
+    margin-bottom: 1rem;
 }
   
 .card {
@@ -116,16 +126,16 @@ label, select {
     max-width: 360px;
     margin: 10px 10px 20px;
     padding: 10px;
-    background: rgba(245, 245, 245, 0.9);
+    background: #e0e0e0;
     border-radius: 0.25em;
-    border: 1px solid rgba(50, 50, 50, 0.3);
+    border: 1px solid #404040;
     transition: .4s ease-out;
     overflow: hidden;
 }
 
 .card-search-item {
-    border-width: 5px;
-    border-color: firebrick;
+    border-width: 8px;
+    border-color: #2388a0;
     transition: .1s ease-out;
 }
 
