@@ -6,4 +6,3 @@ Known bugs:
 - easter egg		When there's an error, there's no way to re-set the page other than by re-loading it.
 					This is very poor; there needs to be at least a button or something.
 - clearGallery / prepGallery - these functions seem to do practically the same thing. Don't need both!
-- DOB format		May need dd/mm/yyyy as well.
