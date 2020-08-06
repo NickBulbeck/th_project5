@@ -1,7 +1,5 @@
 Known bugs:
 
-- Modal 			When there's only one search result, there is an "empty box" div around where the prev/next
-         			buttons would be if they existed. Looks untidy.
 - Exceeds			There's no real alternative font, shading, colour-scheme etc to meet the final rubric for
 					Exceeds. Can't really decide on one either.
 - createModal		Needs re-factoring so that the array it uses is global.

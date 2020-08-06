@@ -79,7 +79,8 @@ const clearGallery = () => {
 }
 
 /**************************************************************************************
-* clearSearch: Re-sets the search input box
+* clearSearch: Re-sets the search (the input field itself, AND the searchedEmployees
+*              array used for processing a search)
 ***************************************************************************************/
 const clearSearch = () => {
   searchInput = document.getElementById('search-input');
@@ -90,8 +91,6 @@ const clearSearch = () => {
   searchButton.value = "Search";
   searchedEmployees = null;
 }
-
-
 
 /**************************************************************************************
 * prepGallery: Clears the gallery div of content prior to a page-refresh or the loading
@@ -118,12 +117,15 @@ const finishGallery = () => {
 }
 
 /**************************************************************************************
-* getImageURL: There's no actual need for this function. I could just use the random
+* getImageURL: There's no actual need for this function! I could just use the random
 *              portrait url supplied in each randomuser employee. BUT, probability
 *              being what it is, you keep finding that - even with as few as 12
 *              employees - the same photo is appended to two different employees on the
-*              same screen. This was kind of bugging me. So I added this function to
-*              make sure that can't happen. Just a bit of fun.
+*              same screen. It's a bit like the well-known fact that in a group of as
+*              few as 24 people, the chances are better than 50% that two of them will
+*              share the same birthday.
+*              This was kind of bugging me. So I added this function to make sure that
+*              all the images are different. Just a bit of fun.
 * @params: gender - string, either 'male' or 'female'
 *          employeeNumber - integer, signifying number of employees to display
 * @return: url (specific to randomuser.me).
@@ -148,7 +150,9 @@ const getImageURL = (gender,employeeNumber) => {
 /**************************************************************************************
 * formatEmployeeBirthday: I hope this name is self-explanatory.
 * @params: String, containing date in the form yyyy-mm-ddThh:mm:ss.123Z
-* @return: String, containing date in the form dd mmm yyyy
+* @return: String, containing date in the form dd mmm yyyy. This format is deliberately
+*          chosen to remove possible ambiguity between US and RestOfWorld format. I.e.,
+*          is 02 04 1980 the second of April, or the fourth of February? 
 ***************************************************************************************/
 const formatEmployeeBirthday = (rawDate) => {
   const months = ["January","Feburary","March","April","May","June",
@@ -283,7 +287,22 @@ const createModal = (array,index) => {
   `;
   modalInfoContainer.innerHTML = html;
   modal.appendChild(modalInfoContainer);
+  modalContainer.appendChild(modal);
 
+  if (array.length > 1) {
+    const modalButtonContainer = createModalNextPrev(array,index);
+    modalContainer.appendChild(modalButtonContainer);
+  }
+  document.body.appendChild(modalContainer);
+}
+
+/**************************************************************************************
+* createModalNextPrev: Adds next/prev buttons, as applicable, to a modal pop-out
+* @params: array - array of employee objects (each one as returned from randomuser.net).
+*          index - the position of the single employee in the above array.
+* @return: a div element
+***************************************************************************************/
+const createModalNextPrev = (array,index) => {
   const modalButtonContainer = document.createElement('div');
   modalButtonContainer.setAttribute('class','modal-btn-container');
   if (index > 0) {
@@ -310,10 +329,7 @@ const createModal = (array,index) => {
     })
     modalButtonContainer.appendChild(forwardButton);
   }
-
-  modalContainer.appendChild(modal);
-  modalContainer.appendChild(modalButtonContainer);
-  document.body.appendChild(modalContainer);
+  return modalButtonContainer;
 }
 
 /**************************************************************************************
